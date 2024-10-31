@@ -47,19 +47,29 @@
     ```
 3. Create YAML Configuration Files
     
-    Set up the YAML configuration files for each service to be deployed. Reference the [sample config files](https://drive.google.com/drive/u/2/folders/1C2Hs3-SxWbYaE3xTo7RRqAg4I7fzponW) for guidance and check the [documentation](https://echodataflow.readthedocs.io/en/latest/configuration/datastore.html) for additional information.
+    Set up the YAML configuration files for each service to be deployed. Reference the [sample config files](https://drive.google.com/drive/u/0/folders/1COo1hO-IWs3wOqeyZkjQVuzijKV_Qrb5) for guidance and check the [documentation](https://echodataflow.readthedocs.io/en/latest/configuration/datastore.html) for additional information.
 4. Add Required YAML Files
 
     Place the following YAML files in a directory. These files are required for the current deployment on Lasker or Shimada, if your use case is different feel free to modify the files accordingly:
 
     ```bash
-    df_Sv_pipeline
+    # edf_Sv_pipeline
     datastore.yaml
     pipeline.yaml
+
+    # compute_MVBS
     datastore_MVBS.yaml
     pipeline_MVBS.yaml
+
+    # prediction + NASC
     datastore_prediction.yaml
     pipeline_prediction.yaml
+
+    # echopop
+    echopop_pipeline_shimada.yaml
+    echopop_pipeline_bio_shimada.yaml
+    echopop_datastore_shimada.yaml
+    echopop_datastore_bio_shimada.yaml
     ```
 
     The model path should be added to the `pipeline_prediction.yaml` file. The current model path is: `/Users/wu-junglee/HakeSurvey2024/models/binary_hake_model_1.0m_bottom_offset_1.0m_depth_2017_2019_ver_1.ckpt`. You can change the model path by modifying the model_path field in the `pipeline_prediction.yaml` file.
@@ -101,7 +111,7 @@
 
 7. Adding Rules
 
-    Echodataflow determines if a flow can run after a preceding flow by using configurable rules. These rules can be set up via CLI commands. For details on adding rules, refer to the [rules documentation](https://echodataflow.readthedocs.io/en/latest/cli/rules.html).
+    Echodataflow determines if a flow can run after a preceding flow by using configurable rules. These rules can be set up via CLI commands. For details on adding rules, refer to the [rules documentation](https://echodataflow.readthedocs.io/en/latest/cli/rules.html). You can find an example rules file here: [echodataflow_rules.txt](../echodataflow/rule_engine/echodataflow_rules.txt). The file is located at `.echodataflow/echodataflow_rules.txt`
 
 ## Scheduling the flows
 
@@ -155,10 +165,10 @@ Echopop has its own configuration files. Please refer to the [Echopop](https://e
 
 Once the configuration files are set up, deploy the Echopop services in a similar manner to the previously deployed flows.
 
-Echopop will create a local database, which is then used for deploying the visualization. Spin up a systemd process that calls the [Echopop panel extension service](../echodataflow/extensions/echopop_panel.py). The service will fetch the data from the database and display it in the panel. By default, it will be available at `http://localhost:1800`.
+Echopop will create a local database, which is then used for deploying the visualization. Spin up a systemd process that calls the [Echopop panel extension service](../echodataflow/extensions/echopop_panel.py). The service will fetch the data from the database and display it in the panel. By default, it will be available at `http://localhost:1802`.
 
-### Echoshader
+#### Echoshader
 
-Echoshader can be deployed in a similar way as the previously deployed flows. Find the sample config [here](https://drive.google.com/drive/u/2/folders/1W8Biq6on2AeK4XOneaxBh8l_B5uo-cj6). Echoshader will extract data from the specified source and store it locally on the machine. The service, similar to other services, should be scheduled in the Prefect UI. The data stored locally from the source files can be accessed using the [Echoshader panel extension service](../echodataflow/extensions/panel_app.py). The service will fetch the data from the local storage and display it in the panel. By default, it will be available at `http://localhost:1800`. Use the refresh button to update the panel.
+Echoshader can be deployed in a similar way as the previously deployed flows. Find the sample config [here](https://drive.google.com/drive/u/2/folders/1W8Biq6on2AeK4XOneaxBh8l_B5uo-cj6). Echoshader will extract data from the specified source and store it locally on the machine. The service, similar to other services, should be scheduled in the Prefect UI. The data stored locally from the source files can be accessed using the [Echoshader panel extension service](../echodataflow/extensions/panel_app_[shimada/lasker].py). The service will fetch the data from the local storage and display it in the panel. By default, it will be available at `http://localhost:[1801/1800]`. Use the refresh button to update the panel.
 
 
