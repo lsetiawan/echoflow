@@ -172,3 +172,6 @@ Echopop will create a local database, which is then used for deploying the visua
 Echoshader can be deployed in a similar way as the previously deployed flows. Find the sample config [here](https://drive.google.com/drive/u/2/folders/1W8Biq6on2AeK4XOneaxBh8l_B5uo-cj6). Echoshader will extract data from the specified source and store it locally on the machine. The service, similar to other services, should be scheduled in the Prefect UI. The data stored locally from the source files can be accessed using the [Echoshader panel extension service](../echodataflow/extensions/panel_app_[shimada/lasker].py). The service will fetch the data from the local storage and display it in the panel. By default, it will be available at `http://localhost:[1801/1800]`. Use the refresh button to update the panel.
 
 
+## Deployment configurations
+
+Full deployment configurations (including scheduling parameters, concurrency limits, etc.) are exported [here](https://drive.google.com/drive/u/0/folders/1seKvfdvFm8fwfwzg-Jj20T_Yaoq-Dp3f) in `.json`  format from Prefect Cloud.
